@@ -1,20 +1,38 @@
 package com.github.thirty_day_challenge.domain.auth.controller;
 
+import com.github.thirty_day_challenge.domain.auth.dto.request.JoinRequest;
 import com.github.thirty_day_challenge.domain.auth.dto.request.LoginRequest;
+import com.github.thirty_day_challenge.domain.auth.dto.response.LoginResponse;
 import com.github.thirty_day_challenge.domain.auth.service.AuthService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/login")
-    public void login(LoginRequest request) {
+    @PostMapping("/join")
+    @Operation(description = "회원가입")
+    public ResponseEntity<Void> join(@RequestBody @Valid JoinRequest request) {
 
-        return authService.login(request);
+        authService.join(request);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/login")
+    @Operation(description = "로그인")
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
+
+        return ResponseEntity.ok(authService.login(request));
     }
 }
