@@ -24,6 +24,7 @@ public class AuthService {
         User user = userRepository.findByNickname(request.getNickname())
                 .orElseThrow(UserExceptions.NOT_FOUND::toException);
 
+        // TODO: 비밀번호 해싱하기
         if (!user.getPassword().equals(request.getPassword())) {
 
             throw AuthExceptions.NOT_EQUAL_PASSWORD.toException();

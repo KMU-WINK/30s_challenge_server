@@ -7,6 +7,8 @@ import com.github.thirty_day_challenge.domain.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +35,13 @@ public class AuthController {
     @Operation(description = "로그인")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
 
-        return ResponseEntity.ok(authService.login(request));
+        ResponseCookie cookie = ResponseCookie
+                .from("sessionId", authService.login(request).toString())
+                .path("/api")
+                .build();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(null);
     }
 }
