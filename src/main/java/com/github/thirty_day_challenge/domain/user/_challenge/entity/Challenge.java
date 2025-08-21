@@ -1,9 +1,9 @@
 package com.github.thirty_day_challenge.domain.user._challenge.entity;
 
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,6 +14,9 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Challenge {
 
     @Id
@@ -41,6 +44,16 @@ public class Challenge {
 
     public enum ChallengeStatus {
         ACTIVE, CANCEL
+    }
+
+    public static SimpleChallengeResponse from(Challenge challenge) {
+        return SimpleChallengeResponse.builder()
+                .id(challenge.getId())
+                .name(challenge.getName())
+                .startedAt(challenge.getStartedAt())
+                .endedAt(challenge.getEndedAt())
+                .status(challenge.getStatus())
+                .build();
     }
 
 }
