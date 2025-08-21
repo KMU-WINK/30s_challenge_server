@@ -7,10 +7,11 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class ApiExceptionResponse {
 
-    private String errorMessage;
+    private String code;
+    private String message;
 
-    public static ApiExceptionResponse from(ApiException apiException) {
+    public static ApiExceptionResponse from(ApiException e) {
 
-        return ApiExceptionResponse.of(apiException.getMessage());
+        return ApiExceptionResponse.of(e.getCode(), e.getMessage());
     }
 }

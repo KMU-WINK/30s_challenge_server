@@ -4,13 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 @Schema(description = "로그인 응답 DTO")
 @AllArgsConstructor(staticName = "of")
 public class LoginResponse {
 
     @Schema(description = "세션 ID")
-    UUID sessionId;
+    String sessionId;
 }

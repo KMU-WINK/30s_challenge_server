@@ -12,6 +12,6 @@ public class ApiExceptionHandler {
     @ExceptionHandler(ApiException.class)
     public ApiExceptionResponse apiException(ApiException e) {
 
-        return ApiExceptionResponse.of(e.getMessage());
+        return ApiExceptionResponse.from(e);
     }
 }
