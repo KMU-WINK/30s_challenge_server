@@ -1,6 +1,5 @@
 package com.github.thirty_day_challenge.global.util;
 
-import com.github.thirty_day_challenge.domain.auth.exception.AuthExceptions;
 import com.github.thirty_day_challenge.domain.auth.repository.UserSessionRepository;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import jakarta.servlet.http.Cookie;
@@ -37,7 +36,7 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .findFirst()
-                .orElseThrow(AuthExceptions.INVALID_SESSION::toException);
+                .orElse(null);
     }
 
     @Override

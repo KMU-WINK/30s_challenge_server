@@ -1,6 +1,6 @@
 package com.github.thirty_day_challenge.global.config;
 
-import com.github.thirty_day_challenge.domain.auth.util.AuthInterceptor;
+import com.github.thirty_day_challenge.domain.auth.interceptor.AuthInterceptor;
 import com.github.thirty_day_challenge.global.util.CurrentUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -23,9 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 
-        registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/login", "/api/join");
+        registry.addInterceptor(authInterceptor);
     }
 
     @Override
