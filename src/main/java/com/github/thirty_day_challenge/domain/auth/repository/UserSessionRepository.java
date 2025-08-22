@@ -3,14 +3,15 @@ package com.github.thirty_day_challenge.domain.auth.repository;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserSessionRepository {
 
-    String save(User user);
+    UUID save(User user);
 
-    Optional<User> findBySessionId(String sessionId);
+    Optional<User> findBySessionId(UUID sessionId);
 
-    boolean existsBySessionId(String sessionId);
+    boolean existsBySessionId(UUID sessionId);
 
-    void delete(String sessionId);
+    void delete(UUID sessionId);
 }

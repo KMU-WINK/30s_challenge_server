@@ -16,28 +16,28 @@ public class UserSessionRepositoryImpl implements UserSessionRepository {
 
     private final UserRepository userRepository;
 
-    private final HashMap<String, Supplier<User>> userSessions = new HashMap<>();
+    private final HashMap<UUID, Supplier<User>> userSessions = new HashMap<>();
 
-    public String save(User user) {
+    public UUID save(User user) {
 
-        String sessionId = UUID.randomUUID().toString();
+        UUID sessionId = UUID.randomUUID();
 
         userSessions.put(sessionId, () -> userRepository.findById(user.getId()).orElseThrow());
 
         return sessionId;
     }
 
-    public Optional<User> findBySessionId(String sessionId) {
+    public Optional<User> findBySessionId(UUID sessionId) {
 
         return Optional.ofNullable(userSessions.get(sessionId)).map(Supplier::get);
     }
 
-    public boolean existsBySessionId(String sessionId) {
+    public boolean existsBySessionId(UUID sessionId) {
 
         return  userSessions.containsKey(sessionId);
     }
 
-    public void delete(String sessionId) {
+    public void delete(UUID sessionId) {
 
         userSessions.remove(sessionId);
     }
