@@ -1,10 +1,12 @@
 package com.github.thirty_day_challenge.domain.user.entity;
 
+import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,4 +32,7 @@ public class User extends BaseSchema {
     @Column(nullable = false)
     @NotBlank
     String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    List<UserChallenge> userChallenge = List.of();
 }
