@@ -39,8 +39,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                             .map(UUID::fromString)
                             .map(userSessionRepository::findBySessionId)
                             .findFirst()
-                            .orElseThrow(AuthExceptions.INVALID_SESSION::toException))
-                    .orElseThrow(AuthExceptions.INVALID_SESSION::toException);
+                            .orElseThrow(AuthExceptions.AUTHENTICATION_FAILED::toException))
+                    .orElseThrow(AuthExceptions.AUTHENTICATION_FAILED::toException);
         }
 
         return true;

@@ -1,7 +1,7 @@
 package com.github.thirty_day_challenge.domain.auth.dto.request;
 
-import com.github.thirty_day_challenge.domain.user.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,24 +11,18 @@ import lombok.Data;
 public class JoinRequest {
 
     @Schema(description = "이름")
+    @NotBlank
     String name;
 
     @Schema(description = "이메일")
+    @NotBlank
     String email;
 
     @Schema(description = "아이디")
+    @NotBlank
     String nickname;
 
     @Schema(description = "비밀번호")
+    @NotBlank
     String password;
-
-    public static JoinRequest from(User user) {
-
-        return JoinRequest.of(
-                user.getName(),
-                user.getEmail(),
-                user.getNickname(),
-                user.getPassword()
-        );
-    }
 }

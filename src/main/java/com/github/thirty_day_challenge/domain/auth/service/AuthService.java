@@ -5,11 +5,11 @@ import com.github.thirty_day_challenge.domain.auth.dto.request.LoginRequest;
 import com.github.thirty_day_challenge.domain.auth.exception.AuthExceptions;
 import com.github.thirty_day_challenge.domain.auth.repository.UserSessionRepository;
 import com.github.thirty_day_challenge.domain.user.entity.User;
-import com.github.thirty_day_challenge.domain.user.exception.UserExceptions;
 import com.github.thirty_day_challenge.domain.user.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -21,15 +21,15 @@ public class AuthService {
     private final UserRepository userRepository;
     private final UserSessionRepository userSessionRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     public ResponseCookie login(LoginRequest request) {
 
         User user = userRepository.findByNickname(request.getNickname())
-                .orElseThrow(UserExceptions.NOT_FOUND::toException);
+                .orElseThrow(AuthExceptions.AUTHENTICATION_FAILED::toException);
 
-        // TODO: 비밀번호 해싱하기
-        if (!user.getPassword().equals(request.getPassword())) {
-
-            throw AuthExceptions.NOT_EQUAL_PASSWORD.toException();
+        if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw AuthExceptions.AUTHENTICATION_FAILED.toException();
         }
 
         UUID sessionId = userSessionRepository.save(user);
@@ -47,7 +47,7 @@ public class AuthService {
                         .name(request.getName())
                         .email(request.getEmail())
                         .nickname(request.getNickname())
-                        .password(request.getPassword())
+                        .password(passwordEncoder.encode(request.getPassword()))
                         .build()
         );
     }
