@@ -31,9 +31,12 @@ public class Challenge extends BaseSchema {
 
     Integer limit;
 
-    ChallengeStatus status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    ChallengeStatus status = ChallengeStatus.ACTIVE;
 
-    enum ChallengeStatus {
+    public enum ChallengeStatus {
         ACTIVE,
         CANCEL
     }
