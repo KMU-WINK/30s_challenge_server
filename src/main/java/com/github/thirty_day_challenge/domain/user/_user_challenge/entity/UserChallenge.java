@@ -3,10 +3,7 @@ package com.github.thirty_day_challenge.domain.user._user_challenge.entity;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -16,6 +13,12 @@ import lombok.*;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                name = "uq_user_challenge_user_and_challenge",
+                columnNames = {"user_id", "challenge_id"}
+        )
+)
 public class UserChallenge extends BaseSchema {
 
     boolean isOwner;
