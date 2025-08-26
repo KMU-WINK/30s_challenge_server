@@ -25,9 +25,12 @@ public class UserChallenge extends BaseSchema {
 
     boolean hasBadge;
 
-    ParticipantStatus status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    ParticipantStatus status = ParticipantStatus.WAITING;
 
-    enum ParticipantStatus {
+    public enum ParticipantStatus {
         WAITING,
         ACCEPT,
         REJECT
