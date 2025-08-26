@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,5 +43,5 @@ public class Challenge extends BaseSchema {
     }
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    List<UserChallenge> userChallenge = List.of();
+    List<UserChallenge> userChallenge = new ArrayList<>();
 }
