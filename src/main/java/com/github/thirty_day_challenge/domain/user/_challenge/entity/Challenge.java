@@ -2,10 +2,7 @@ package com.github.thirty_day_challenge.domain.user._challenge.entity;
 
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -20,10 +17,12 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Challenge extends BaseSchema {
 
+    @Column(nullable = false)
     String name;
 
     String description;
 
+    @Column(nullable = false, unique = true)
     String code;
 
     LocalDate startedAt;
