@@ -30,6 +30,7 @@ public class Challenge extends BaseSchema {
 
     LocalDate endedAt;
 
+    @Column(name = "limit_count")
     Integer limit;
 
     @Enumerated(EnumType.STRING)
