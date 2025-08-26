@@ -44,5 +44,6 @@ public class Challenge extends BaseSchema {
     }
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     List<UserChallenge> userChallenge = new ArrayList<>();
 }
