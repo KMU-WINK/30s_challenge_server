@@ -16,8 +16,10 @@ import lombok.*;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "challenge_id"}))
 public class UserChallenge extends BaseSchema {
 
+    @Column(nullable = false)
     boolean isOwner;
 
+    @Column(nullable = false)
     boolean hasBadge;
 
     @Enumerated(EnumType.STRING)
