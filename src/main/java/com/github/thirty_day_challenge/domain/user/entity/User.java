@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseSchema {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @NotBlank
     String name;
 
