@@ -21,13 +21,16 @@ public class Challenge extends BaseSchema {
     @Column(nullable = false)
     String name;
 
+    @Column(nullable = false)
     String description;
 
     @Column(nullable = false, unique = true)
     String code;
 
+    @Column(nullable = false)
     LocalDate startedAt;
 
+    @Column(nullable = false)
     LocalDate endedAt;
 
     @Column(name = "limit_count")
