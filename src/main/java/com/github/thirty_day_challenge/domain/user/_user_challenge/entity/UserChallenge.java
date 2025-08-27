@@ -13,12 +13,7 @@ import lombok.*;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(
-        uniqueConstraints = @UniqueConstraint(
-                name = "uq_user_challenge_user_and_challenge",
-                columnNames = {"user_id", "challenge_id"}
-        )
-)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "challenge_id"}))
 public class UserChallenge extends BaseSchema {
 
     boolean isOwner;
