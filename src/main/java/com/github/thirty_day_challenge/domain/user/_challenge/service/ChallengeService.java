@@ -17,7 +17,16 @@ public class ChallengeService {
 
     String code = generateUniqueCode();
 
+    @org.springframework.transaction.annotation.Transactional
     public CreateChallengeResponse create(CreateChallengeRequest request) {
+
+        if (request.getStartedAt() != null && request.getEndedAt() != null
+                && request.getEndedAt().isBefore(request.getStartedAt())) {
+            throw new IllegalArgumentException("endedAt must be on/after startedAt");
+        }
+        if (request.getLimit() != null && request.getLimit() <= 0) {
+            throw new IllegalArgumentException("limit must be positive");
+        }
 
         Challenge challenge = Challenge.builder()
                 .name(request.getName())
