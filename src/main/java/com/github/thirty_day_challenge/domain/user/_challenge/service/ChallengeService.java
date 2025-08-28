@@ -1,13 +1,18 @@
 package com.github.thirty_day_challenge.domain.user._challenge.service;
 
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.CreateChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
+import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
+import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.domain.user._challenge.repository.ChallengeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,5 +38,19 @@ public class ChallengeService {
         );
 
         return CreateChallengeResponse.from(challenge);
+    }
+
+    public List<SimpleChallengeResponse> getAllChallenges(User user) {
+
+        List<Challenge> challenges = userChallengeRepository.findChallengesByUser(user);
+
+        List<SimpleChallengeResponse> responses = new ArrayList<>();
+
+        for (Challenge challenge : challenges) {
+
+            SimpleChallengeResponse dto = SimpleChallengeResponse.from(challenge);
+            responses.add(dto); }
+
+        return responses;
     }
 }
