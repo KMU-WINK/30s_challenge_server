@@ -6,25 +6,25 @@ import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "challenge_id"}))
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Getter
 @Setter
 @Builder(toBuilder = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "challenge_id"}))
 public class UserChallenge extends BaseSchema {
 
     @Column(nullable = false)
-    boolean isOwner = false;
+    boolean isOwner;
 
     @Column(nullable = false)
     boolean hasBadge;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    @Enumerated(EnumType.STRING)
     ParticipantStatus status = ParticipantStatus.WAITING;
 
     public enum ParticipantStatus {

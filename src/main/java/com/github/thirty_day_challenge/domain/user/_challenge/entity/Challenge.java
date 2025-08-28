@@ -3,9 +3,6 @@ package com.github.thirty_day_challenge.domain.user._challenge.entity;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,43 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Getter
 @Setter
 @Builder(toBuilder = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Challenge extends BaseSchema {
 
     @Column(nullable = false)
-    @NotBlank
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false, unique = true)
-    @NotBlank
     private String code;
 
-    @Column
-    private String icon;
-
     @Column(nullable = false)
-    @NotNull
     private LocalDate startedAt;
 
     @Column(nullable = false)
-    @NotNull
     private LocalDate endedAt;
 
-    @Positive
-    private Integer limits;
+    @Column(name = "limit_count")
+    private Integer limit;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    @Enumerated(EnumType.STRING)
-    ChallengeStatus status = ChallengeStatus.ACTIVE;
+    private ChallengeStatus status = ChallengeStatus.ACTIVE;
 
     public enum ChallengeStatus {
         ACTIVE,
@@ -58,5 +48,5 @@ public class Challenge extends BaseSchema {
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
-    List<UserChallenge> userChallenges = new ArrayList<>();
+    private List<UserChallenge> userChallenge = new ArrayList<>();
 }
