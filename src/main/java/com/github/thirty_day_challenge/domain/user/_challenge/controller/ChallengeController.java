@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/users/challenges")
 @RequiredArgsConstructor
@@ -24,7 +26,6 @@ public class ChallengeController {
     @PostMapping
     public ResponseEntity<CreateChallengeResponse> createChallenge(@RequestBody @Valid CreateChallengeRequest request) {
         CreateChallengeResponse response = challengeService.create(request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.created(URI.create("/users/challenges/" + response.getId())).body(response);
     }
-
 }
