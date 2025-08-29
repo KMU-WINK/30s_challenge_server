@@ -1,5 +1,6 @@
 package com.github.thirty_day_challenge.domain.user._challenge.entity;
 
+import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
@@ -14,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Getter
+@Setter
 @Builder(toBuilder = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Challenge extends BaseSchema {
@@ -41,13 +43,12 @@ public class Challenge extends BaseSchema {
     @NotNull
     private LocalDate endedAt;
 
-    @Column(name = "limit_count")
     @Positive
     private Integer limit;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     ChallengeStatus status = ChallengeStatus.ACTIVE;
 
     public enum ChallengeStatus {
@@ -63,16 +64,7 @@ public class Challenge extends BaseSchema {
     @PreUpdate
     private void validateDates() {
         if (startedAt != null && endedAt != null && endedAt.isBefore(startedAt)) {
-            throw new IllegalStateException("endedAt must be on or after startedAt");
+            throw ChallengeExceptions.INVALID_DATE.toException();
         }
-    }
-
-    public void addUserChallenge(UserChallenge uc) {
-        this.userChallenges.add(uc);
-        uc.setChallenge(this);
-    }
-    public void removeUserChallenge(UserChallenge uc) {
-        this.userChallenges.remove(uc);
-        uc.setChallenge(null);
     }
 }
