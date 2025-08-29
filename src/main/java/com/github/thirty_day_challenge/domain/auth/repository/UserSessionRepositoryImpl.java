@@ -32,6 +32,11 @@ public class UserSessionRepositoryImpl implements UserSessionRepository {
         return Optional.ofNullable(userSessions.get(sessionId)).map(Supplier::get);
     }
 
+    public boolean existsBySessionId(UUID sessionId) {
+
+        return  userSessions.containsKey(sessionId);
+    }
+
     public void delete(UUID sessionId) {
 
         userSessions.remove(sessionId);

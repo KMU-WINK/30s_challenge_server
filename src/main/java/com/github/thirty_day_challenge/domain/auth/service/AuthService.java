@@ -2,15 +2,17 @@ package com.github.thirty_day_challenge.domain.auth.service;
 
 import com.github.thirty_day_challenge.domain.auth.dto.request.JoinRequest;
 import com.github.thirty_day_challenge.domain.auth.dto.request.LoginRequest;
-import com.github.thirty_day_challenge.domain.auth.dto.response.LoginResponse;
 import com.github.thirty_day_challenge.domain.auth.exception.AuthExceptions;
 import com.github.thirty_day_challenge.domain.auth.repository.UserSessionRepository;
 import com.github.thirty_day_challenge.domain.user.entity.User;
-import com.github.thirty_day_challenge.domain.user.exception.UserExceptions;
 import com.github.thirty_day_challenge.domain.user.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +21,23 @@ public class AuthService {
     private final UserRepository userRepository;
     private final UserSessionRepository userSessionRepository;
 
-    public LoginResponse login(LoginRequest request) {
+    private final PasswordEncoder passwordEncoder;
+
+    public ResponseCookie login(LoginRequest request) {
 
         User user = userRepository.findByNickname(request.getNickname())
-                .orElseThrow(UserExceptions.NOT_FOUND::toException);
+                .orElseThrow(AuthExceptions.AUTHENTICATION_FAILED::toException);
 
-        if (!user.getPassword().equals(request.getPassword())) {
-
-            throw AuthExceptions.NOT_EQUAL_PASSWORD.toException();
+        if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw AuthExceptions.AUTHENTICATION_FAILED.toException();
         }
 
-        return LoginResponse.of(userSessionRepository.save(user));
+        UUID sessionId = userSessionRepository.save(user);
+
+        return ResponseCookie.from("sessionId", sessionId.toString())
+                .path("/api")
+                .httpOnly(true)
+                .build();
     }
 
     public void join(@Valid JoinRequest request) {
@@ -39,7 +47,7 @@ public class AuthService {
                         .name(request.getName())
                         .email(request.getEmail())
                         .nickname(request.getNickname())
-                        .password(request.getPassword())
+                        .password(passwordEncoder.encode(request.getPassword()))
                         .build()
         );
     }

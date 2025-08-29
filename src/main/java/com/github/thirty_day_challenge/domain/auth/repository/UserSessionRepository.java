@@ -11,5 +11,7 @@ public interface UserSessionRepository {
 
     Optional<User> findBySessionId(UUID sessionId);
 
+    boolean existsBySessionId(UUID sessionId);
+
     void delete(UUID sessionId);
 }

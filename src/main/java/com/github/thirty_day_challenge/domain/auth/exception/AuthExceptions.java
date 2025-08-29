@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum AuthExceptions implements ApiExceptionCode {
 
-    NOT_EQUAL_PASSWORD("AUTH_001", "비밀번호가 일치하지 않습니다."),
+    AUTHENTICATION_FAILED("AUTH_001", "인증을 실패했습니다."),
     ;
 
     private final String code;
