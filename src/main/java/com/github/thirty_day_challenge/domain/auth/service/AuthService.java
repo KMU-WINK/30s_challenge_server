@@ -28,7 +28,7 @@ public class AuthService {
         User user = userRepository.findByNickname(request.getNickname())
                 .orElseThrow(AuthExceptions.AUTHENTICATION_FAILED::toException);
 
-        if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw AuthExceptions.AUTHENTICATION_FAILED.toException();
         }
 
