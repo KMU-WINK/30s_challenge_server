@@ -1,7 +1,6 @@
 package com.github.thirty_day_challenge.domain.user._challenge.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -24,14 +23,12 @@ public class CreateChallengeRequest {
     private String description;
 
     @NotNull
-    @FutureOrPresent
     private LocalDate startedAt;
 
     @NotNull
-    @FutureOrPresent
     private LocalDate endedAt;
 
     @NotNull
     @Positive
-    private Integer limit;
+    private Integer limits;
 }

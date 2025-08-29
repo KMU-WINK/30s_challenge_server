@@ -1,13 +1,11 @@
 package com.github.thirty_day_challenge.domain.user._challenge.entity;
 
-import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
-import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
+import com.github.thirty_day_challenge.domain.user._challenge._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-
 import lombok.*;
 
 import java.time.LocalDate;
@@ -44,7 +42,7 @@ public class Challenge extends BaseSchema {
     private LocalDate endedAt;
 
     @Positive
-    private Integer limit;
+    private Integer limits;
 
     @Column(nullable = false)
     @Builder.Default
@@ -59,12 +57,4 @@ public class Challenge extends BaseSchema {
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     List<UserChallenge> userChallenges = new ArrayList<>();
-
-    @PrePersist
-    @PreUpdate
-    private void validateDates() {
-        if (startedAt != null && endedAt != null && endedAt.isBefore(startedAt)) {
-            throw ChallengeExceptions.INVALID_DATE.toException();
-        }
-    }
 }

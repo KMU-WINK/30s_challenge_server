@@ -25,7 +25,7 @@ public class CreateChallengeResponse {
 
     LocalDate endedAt;
 
-    Integer limit;
+    Integer limits;
 
     Challenge.ChallengeStatus status;
 
@@ -38,7 +38,7 @@ public class CreateChallengeResponse {
                 challenge.getCode(),
                 challenge.getStartedAt(),
                 challenge.getEndedAt(),
-                challenge.getLimit(),
+                challenge.getLimits(),
                 challenge.getStatus()
         );
     }

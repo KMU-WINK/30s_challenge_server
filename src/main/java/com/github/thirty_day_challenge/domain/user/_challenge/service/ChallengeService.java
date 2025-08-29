@@ -27,7 +27,7 @@ public class ChallengeService {
                         .description(request.getDescription())
                         .startedAt(request.getStartedAt())
                         .endedAt(request.getEndedAt())
-                        .limit(request.getLimit())
+                        .limits(request.getLimits())
                         .code(code)
                         .build()
         );
