@@ -1,5 +1,6 @@
 package com.github.thirty_day_challenge.domain.user._challenge.service;
 
+import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
@@ -23,6 +24,11 @@ public class ChallengeService {
 
     @Transactional
     public CreateChallengeResponse createChallenge(User user, CreateChallengeRequest request) {
+
+        if (request.getEndedAt().isBefore(request.getStartedAt())) {
+
+            throw ChallengeExceptions.INVALID_DATE.toException();
+        }
 
         String code = UUID.randomUUID().toString().substring(0, 8);
 
