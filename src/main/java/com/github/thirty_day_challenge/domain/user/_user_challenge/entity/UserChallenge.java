@@ -20,18 +20,7 @@ public class UserChallenge extends BaseSchema {
     boolean isOwner = false;
 
     @Column(nullable = false)
-    boolean hasBadge;
-
-    @Column(nullable = false)
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    ParticipantStatus status = ParticipantStatus.WAITING;
-
-    public enum ParticipantStatus {
-        WAITING,
-        ACCEPT,
-        REJECT
-    }
+    boolean isCompleted = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

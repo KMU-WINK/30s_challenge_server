@@ -46,16 +46,6 @@ public class Challenge extends BaseSchema {
     @Positive
     private Integer limits;
 
-    @Column(nullable = false)
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    ChallengeStatus status = ChallengeStatus.ACTIVE;
-
-    public enum ChallengeStatus {
-        ACTIVE,
-        CANCEL
-    }
-
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     List<UserChallenge> userChallenges = new ArrayList<>();
