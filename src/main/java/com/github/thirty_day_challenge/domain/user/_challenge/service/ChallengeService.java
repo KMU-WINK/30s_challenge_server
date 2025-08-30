@@ -30,6 +30,7 @@ public class ChallengeService {
                 Challenge.builder()
                         .name(request.getName())
                         .description(request.getDescription())
+                        .icon(request.getIcon())
                         .startedAt(request.getStartedAt())
                         .endedAt(request.getEndedAt())
                         .limits(request.getLimits())

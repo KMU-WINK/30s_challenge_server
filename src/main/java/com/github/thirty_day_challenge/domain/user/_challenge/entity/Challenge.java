@@ -32,6 +32,9 @@ public class Challenge extends BaseSchema {
     @NotBlank
     private String code;
 
+    @Column
+    private String icon;
+
     @Column(nullable = false)
     @NotNull
     private LocalDate startedAt;
