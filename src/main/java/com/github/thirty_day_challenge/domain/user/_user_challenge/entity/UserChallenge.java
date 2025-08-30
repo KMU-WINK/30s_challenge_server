@@ -1,4 +1,4 @@
-package com.github.thirty_day_challenge.domain.user._challenge._user_challenge.entity;
+package com.github.thirty_day_challenge.domain.user._user_challenge.entity;
 
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user.entity.User;
@@ -17,14 +17,14 @@ import lombok.*;
 public class UserChallenge extends BaseSchema {
 
     @Column(nullable = false)
-    boolean isOwner;
+    boolean isOwner = false;
 
     @Column(nullable = false)
     boolean hasBadge;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     ParticipantStatus status = ParticipantStatus.WAITING;
 
     public enum ParticipantStatus {

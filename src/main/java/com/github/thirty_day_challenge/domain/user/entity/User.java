@@ -1,6 +1,6 @@
 package com.github.thirty_day_challenge.domain.user.entity;
 
-import com.github.thirty_day_challenge.domain.user._challenge._user_challenge.entity.UserChallenge;
+import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

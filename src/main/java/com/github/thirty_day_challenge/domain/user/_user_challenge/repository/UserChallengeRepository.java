@@ -1,6 +1,5 @@
 package com.github.thirty_day_challenge.domain.user._user_challenge.repository;
 
-import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,5 +9,5 @@ import java.util.UUID;
 
 public interface UserChallengeRepository extends JpaRepository<UserChallenge, UUID> {
 
-    List<Challenge> findChallengesByUser(User user);
+    List<UserChallenge> findByUser(User user);
 }

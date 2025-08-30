@@ -1,6 +1,6 @@
-package com.github.thirty_day_challenge.domain.user._challenge._user_challenge.service;
+package com.github.thirty_day_challenge.domain.user._user_challenge.service;
 
-import com.github.thirty_day_challenge.domain.user._challenge._user_challenge.repository.UserChallengeRepository;
+import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
