@@ -19,8 +19,9 @@ public class CreateChallengeRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
     private String description;
+
+    private String icon;
 
     @NotNull
     private LocalDate startedAt;
@@ -28,7 +29,6 @@ public class CreateChallengeRequest {
     @NotNull
     private LocalDate endedAt;
 
-    @NotNull
     @Positive
     private Integer limits;
 }

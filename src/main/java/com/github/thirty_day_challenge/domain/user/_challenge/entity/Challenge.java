@@ -1,6 +1,6 @@
 package com.github.thirty_day_challenge.domain.user._challenge.entity;
 
-import com.github.thirty_day_challenge.domain.user._challenge._user_challenge.entity.UserChallenge;
+import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -25,13 +25,15 @@ public class Challenge extends BaseSchema {
     @NotBlank
     private String name;
 
-    @Column(nullable = false)
-    @NotBlank
+    @Column
     private String description;
 
     @Column(nullable = false, unique = true)
     @NotBlank
     private String code;
+
+    @Column
+    private String icon;
 
     @Column(nullable = false)
     @NotNull
