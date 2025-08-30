@@ -25,8 +25,7 @@ public class Challenge extends BaseSchema {
     @NotBlank
     private String name;
 
-    @Column(nullable = false)
-    @NotBlank
+    @Column
     private String description;
 
     @Column(nullable = false, unique = true)
