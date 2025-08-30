@@ -1,11 +1,11 @@
 package com.github.thirty_day_challenge.domain.user._challenge.dto.response;
 
+import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.UUID;
-import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 
 @Data
 @AllArgsConstructor(staticName = "of")
@@ -15,20 +15,20 @@ public class SimpleChallengeResponse {
 
     String name;
 
+    String icon;
+
     LocalDate startedAt;
 
     LocalDate endedAt;
-
-    Challenge.ChallengeStatus status;
 
     public static SimpleChallengeResponse from(Challenge challenge) {
 
         return new SimpleChallengeResponse(
                 challenge.getId(),
                 challenge.getName(),
+                challenge.getIcon(),
                 challenge.getStartedAt(),
-                challenge.getEndedAt(),
-                challenge.getStatus()
+                challenge.getEndedAt()
         );
     }
 }

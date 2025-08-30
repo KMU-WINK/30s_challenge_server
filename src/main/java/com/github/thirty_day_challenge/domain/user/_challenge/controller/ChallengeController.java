@@ -3,7 +3,7 @@ package com.github.thirty_day_challenge.domain.user._challenge.controller;
 import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeListResponse;
-import com.github.thirty_day_challenge.domain.user._challenge.dto.response.CreateChallengeResponse;
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.service.ChallengeService;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
@@ -23,7 +23,7 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @PostMapping
-    public ResponseEntity<CreateChallengeResponse> createChallenge(
+    public ResponseEntity<ChallengeResponse> createChallenge(
             @CurrentUser User user,
             @RequestBody @Valid CreateChallengeRequest request
     ) {

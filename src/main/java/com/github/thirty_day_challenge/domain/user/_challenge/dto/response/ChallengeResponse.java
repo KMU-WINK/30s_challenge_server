@@ -9,9 +9,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
-@Schema(description = "챌린지 생성 응답 DTO")
+@Schema(description = "챌린지 응답 DTO")
 @AllArgsConstructor(staticName = "of")
-public class CreateChallengeResponse {
+public class ChallengeResponse {
 
     UUID id;
 
@@ -21,25 +21,25 @@ public class CreateChallengeResponse {
 
     String code;
 
+    String icon;
+
     LocalDate startedAt;
 
     LocalDate endedAt;
 
     Integer limits;
 
-    Challenge.ChallengeStatus status;
+    public static ChallengeResponse from(Challenge challenge) {
 
-    public static CreateChallengeResponse from(Challenge challenge) {
-
-        return CreateChallengeResponse.of(
+        return ChallengeResponse.of(
                 challenge.getId(),
                 challenge.getName(),
                 challenge.getDescription(),
                 challenge.getCode(),
+                challenge.getIcon(),
                 challenge.getStartedAt(),
                 challenge.getEndedAt(),
-                challenge.getLimits(),
-                challenge.getStatus()
+                challenge.getLimits()
         );
     }
 }
