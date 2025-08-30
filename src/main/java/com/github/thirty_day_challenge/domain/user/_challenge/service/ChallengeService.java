@@ -1,13 +1,13 @@
 package com.github.thirty_day_challenge.domain.user._challenge.service;
 
-import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
-import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
-import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeListResponse;
-import com.github.thirty_day_challenge.domain.user._challenge.dto.response.CreateChallengeResponse;
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
+import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._challenge.repository.ChallengeRepository;
+import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
+import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class ChallengeService {
     private final ChallengeRepository challengeRepository;
 
     @Transactional
-    public CreateChallengeResponse createChallenge(User user, CreateChallengeRequest request) {
+    public ChallengeResponse createChallenge(User user, CreateChallengeRequest request) {
 
         if (request.getEndedAt().isBefore(request.getStartedAt())) {
 
@@ -52,7 +52,7 @@ public class ChallengeService {
                         .build()
         );
 
-        return CreateChallengeResponse.from(challenge);
+        return ChallengeResponse.from(challenge);
     }
 
     @Transactional(readOnly = true)
