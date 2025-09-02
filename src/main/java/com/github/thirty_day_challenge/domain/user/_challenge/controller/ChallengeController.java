@@ -4,6 +4,7 @@ import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeListResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeResponse;
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.service.ChallengeService;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
@@ -35,5 +36,11 @@ public class ChallengeController {
     public ResponseEntity<ChallengeListResponse> getAllChallenges(@CurrentUser User user) {
 
         return ResponseEntity.ok(challengeService.getAllChallenges(user));
+    }
+
+    @GetMapping("/{code}")
+    public ResponseEntity<SimpleChallengeResponse> searchChallenge(@CurrentUser User user, @PathVariable String code) {
+
+        return ResponseEntity.ok(challengeService.searchChallenge(user, code));
     }
 }
