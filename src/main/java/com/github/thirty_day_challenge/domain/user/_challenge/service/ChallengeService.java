@@ -3,6 +3,7 @@ package com.github.thirty_day_challenge.domain.user._challenge.service;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeListResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeResponse;
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._challenge.repository.ChallengeRepository;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -61,5 +63,18 @@ public class ChallengeService {
         return ChallengeListResponse.from(userChallengeRepository.findByUser(user).stream()
                 .map(UserChallenge::getChallenge)
                 .toList());
+    }
+
+    @Transactional
+    public SimpleChallengeResponse searchChallenge(User user, String code) {
+
+        List<UserChallenge> userChallenges = userChallengeRepository.findByUser(user);
+
+        for (UserChallenge userChallenge : userChallenges) {
+            if (userChallenge.getChallenge().getCode().equals(code)) {
+                return SimpleChallengeResponse.from(userChallenge.getChallenge());
+            }
+        }
+        throw ChallengeExceptions.CHALLENGE_NOT_FOUND.toException();
     }
 }
