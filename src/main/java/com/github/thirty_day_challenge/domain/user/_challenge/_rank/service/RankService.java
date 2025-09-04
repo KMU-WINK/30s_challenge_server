@@ -9,7 +9,9 @@ import com.github.thirty_day_challenge.domain.user._user_challenge.repository.Us
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,7 +30,7 @@ public class RankService {
 
         UserChallenge userChallenge = userChallengeRepository
                 .findByUserAndChallengeId(user, challengeId)
-                .orElseThrow(() -> new RuntimeException("UserChallenge not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UserChallenge not found"));
 
         List<DailyRecord> records = dailyRecordRepository
                 .findAllByUserChallengeOrderByCreatedAtAsc(userChallenge);

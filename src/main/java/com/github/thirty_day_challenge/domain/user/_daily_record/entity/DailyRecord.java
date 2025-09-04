@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DailyRecord extends BaseSchema {
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     @NotNull
     private LocalDateTime createdAt;
 
