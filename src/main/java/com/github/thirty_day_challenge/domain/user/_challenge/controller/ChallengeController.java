@@ -36,4 +36,12 @@ public class ChallengeController {
 
         return ResponseEntity.ok(challengeService.getAllChallenges(user));
     }
+
+    @PostMapping("/{code}")
+    public ResponseEntity<Void> participateChallenge(@CurrentUser User user, @PathVariable String code) {
+
+        challengeService.participateChallenge(user, code);
+
+        return ResponseEntity.ok().build();
+    }
 }
