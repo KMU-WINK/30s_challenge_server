@@ -39,8 +39,8 @@ public class ChallengeController {
     }
 
     @GetMapping("/{code}")
-    public ResponseEntity<SimpleChallengeResponse> searchChallenge(@CurrentUser User user, @PathVariable String code) {
+    public ResponseEntity<SimpleChallengeResponse> searchChallenge(@PathVariable String code) {
 
-        return ResponseEntity.ok(challengeService.searchChallenge(user, code));
+        return ResponseEntity.ok(challengeService.searchChallenge(code));
     }
 }
