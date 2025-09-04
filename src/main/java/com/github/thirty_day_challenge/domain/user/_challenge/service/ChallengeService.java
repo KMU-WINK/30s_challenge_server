@@ -62,4 +62,19 @@ public class ChallengeService {
                 .map(UserChallenge::getChallenge)
                 .toList());
     }
+
+    @Transactional
+    public void participateChallenge(User user, String code) {
+
+        Challenge challenge = challengeRepository.findByCode(code)
+                .orElseThrow(() -> ChallengeExceptions.CHALLENGE_NOT_FOUND.toException());
+
+        UserChallenge userChallenge = UserChallenge.builder()
+                .user(user)
+                .challenge(challenge)
+                .isOwner(false)
+                .build();
+
+        userChallengeRepository.save(userChallenge);
+    }
 }
