@@ -67,7 +67,9 @@ public class ChallengeService {
     @Transactional
     public SimpleChallengeResponse searchChallenge(String code) {
 
-        Challenge challenge = challengeRepository.findByCode(code);
+        Challenge challenge = challengeRepository.findByCode(code)
+                .orElseThrow(() -> ChallengeExceptions.CHALLENGE_NOT_FOUND.toException());
+
         return SimpleChallengeResponse.from(challenge);
     }
 }
