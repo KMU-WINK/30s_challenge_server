@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +26,7 @@ public class RankService {
 
     private final UserChallengeRepository userChallengeRepository;
     private final DailyRecordRepository dailyRecordRepository;
+    private final Clock clock;
 
     public MyStreakResponse getStreak(@CurrentUser User user, UUID challengeId) {
 
@@ -37,11 +39,11 @@ public class RankService {
 
         Set<LocalDate> completedDays = records.stream()
                 .filter(DailyRecord::isCompleted)
-                .map(r -> r.getCreatedAt().toLocalDate())
+                .map(r -> r.getCreatedAt().atZone(clock.getZone()).toLocalDate())
                 .collect(Collectors.toSet());
 
         int streak = 0;
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(clock);
 
         LocalDate day = completedDays.contains(today) ? today : today.minusDays(1);
 
