@@ -1,4 +1,4 @@
-package com.github.thirty_day_challenge.domain.user._challenge._daily_record.entity;
+package com.github.thirty_day_challenge.domain.user._daily_record.entity;
 
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
@@ -26,7 +26,7 @@ public class DailyRecord extends BaseSchema {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_challenge", nullable = false)
     private UserChallenge userChallenge;
 
     @Column(nullable = false)

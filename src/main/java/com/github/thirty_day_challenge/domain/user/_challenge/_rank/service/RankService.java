@@ -1,7 +1,7 @@
 package com.github.thirty_day_challenge.domain.user._challenge._rank.service;
 
-import com.github.thirty_day_challenge.domain.user._challenge._daily_record.entity.DailyRecord;
-import com.github.thirty_day_challenge.domain.user._challenge._daily_record.repository.DailyRecordRepository;
+import com.github.thirty_day_challenge.domain.user._daily_record.entity.DailyRecord;
+import com.github.thirty_day_challenge.domain.user._daily_record.repository.DailyRecordRepository;
 import com.github.thirty_day_challenge.domain.user._challenge._rank.dto.MyStreakResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
@@ -41,9 +41,11 @@ public class RankService {
         int streak = 0;
         LocalDate today = LocalDate.now();
 
-        while (completedDays.contains(today)) {
+        LocalDate day = completedDays.contains(today) ? today : today.minusDays(1);
+
+        while (completedDays.contains(day)) {
             streak++;
-            today = today.minusDays(1);
+            day = day.minusDays(1);
         }
 
         return new MyStreakResponse(
