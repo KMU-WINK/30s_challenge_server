@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -66,15 +65,9 @@ public class ChallengeService {
     }
 
     @Transactional
-    public SimpleChallengeResponse searchChallenge(User user, String code) {
+    public SimpleChallengeResponse searchChallenge(String code) {
 
-        List<UserChallenge> userChallenges = userChallengeRepository.findByUser(user);
-
-        for (UserChallenge userChallenge : userChallenges) {
-            if (userChallenge.getChallenge().getCode().equals(code)) {
-                return SimpleChallengeResponse.from(userChallenge.getChallenge());
-            }
-        }
-        throw ChallengeExceptions.CHALLENGE_NOT_FOUND.toException();
+        Challenge challenge = challengeRepository.findByCode(code);
+        return SimpleChallengeResponse.from(challenge);
     }
 }
