@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 public enum ChallengeExceptions implements ApiExceptionCode {
 
     INVALID_DATE("CH_001", "날짜 정보가 올바르지 않습니다."),
-    ;
+    CHALLENGE_NOT_FOUND("CH_002", "코드에 해당하는 챌린지가 없습니다.");
 
     private final String code;
     private final String message;
