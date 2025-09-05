@@ -12,6 +12,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-app:
-  time-zone: Asia/Seoul
