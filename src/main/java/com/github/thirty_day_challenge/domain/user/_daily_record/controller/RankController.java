@@ -1,8 +1,8 @@
-package com.github.thirty_day_challenge.domain.user._challenge._rank.controller;
+package com.github.thirty_day_challenge.domain.user._daily_record.controller;
 
 import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
-import com.github.thirty_day_challenge.domain.user._challenge._rank.dto.MyStreakResponse;
-import com.github.thirty_day_challenge.domain.user._challenge._rank.service.RankService;
+import com.github.thirty_day_challenge.domain.user._daily_record.dto.MyStreakResponse;
+import com.github.thirty_day_challenge.domain.user._daily_record.service.RankService;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
 import lombok.RequiredArgsConstructor;

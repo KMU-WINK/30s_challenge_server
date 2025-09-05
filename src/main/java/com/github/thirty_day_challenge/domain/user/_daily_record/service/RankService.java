@@ -1,8 +1,8 @@
-package com.github.thirty_day_challenge.domain.user._challenge._rank.service;
+package com.github.thirty_day_challenge.domain.user._daily_record.service;
 
 import com.github.thirty_day_challenge.domain.user._daily_record.entity.DailyRecord;
 import com.github.thirty_day_challenge.domain.user._daily_record.repository.DailyRecordRepository;
-import com.github.thirty_day_challenge.domain.user._challenge._rank.dto.MyStreakResponse;
+import com.github.thirty_day_challenge.domain.user._daily_record.dto.MyStreakResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;

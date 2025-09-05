@@ -1,4 +1,4 @@
-package com.github.thirty_day_challenge.domain.user._challenge._rank.dto;
+package com.github.thirty_day_challenge.domain.user._daily_record.dto;
 
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import lombok.AllArgsConstructor;
