@@ -24,7 +24,7 @@ public class DailyRecord extends BaseSchema {
     @Column(name = "record_date", nullable = false)
     private LocalDate recordDate;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 2048)
     private String image;
 
 }
