@@ -14,6 +14,10 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DailyRecord extends BaseSchema {
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_challenge_id", nullable = false)
+    private UserChallenge userChallenge;
+
     @Column(nullable = false)
     private boolean isCompleted = false;
 
