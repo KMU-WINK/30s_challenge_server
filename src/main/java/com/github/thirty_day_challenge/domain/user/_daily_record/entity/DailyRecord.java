@@ -6,8 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Setter
@@ -17,23 +15,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DailyRecord extends BaseSchema {
 
-    @Column(nullable = false)
-    @NotNull
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    @NotNull
-    private LocalDateTime updatedAt;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_challenge", nullable = false)
-    private UserChallenge userChallenge;
+    @JoinColumn(name = "user_challenge_id", nullable = false)
+    UserChallenge userChallenge;
 
     @Column(nullable = false)
-    private boolean isCompleted;
+    boolean isCompleted = false;
 
-    @Column(nullable = false)
+    @Column
     @NotNull
-    private String image;
+    String image;
 }
 
