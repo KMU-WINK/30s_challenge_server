@@ -3,7 +3,6 @@ package com.github.thirty_day_challenge.domain.user._challenge.service;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeListResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeResponse;
-import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._challenge.repository.ChallengeRepository;
@@ -64,12 +63,10 @@ public class ChallengeService {
                 .toList());
     }
 
-    @Transactional
-    public SimpleChallengeResponse searchChallenge(String code) {
+    @Transactional(readOnly = true)
+    public ChallengeResponse searchChallenge(String code) {
 
-        Challenge challenge = challengeRepository.findByCode(code)
-                .orElseThrow(() -> ChallengeExceptions.CHALLENGE_NOT_FOUND.toException());
-
-        return SimpleChallengeResponse.from(challenge);
+        return ChallengeResponse.from(challengeRepository.findByCode(code)
+                .orElseThrow(ChallengeExceptions.NOT_FOUND::toException));
     }
 }
