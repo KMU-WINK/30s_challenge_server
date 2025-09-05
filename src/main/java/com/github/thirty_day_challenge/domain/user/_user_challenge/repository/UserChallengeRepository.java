@@ -1,5 +1,6 @@
 package com.github.thirty_day_challenge.domain.user._user_challenge.repository;
 
+import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -14,6 +15,6 @@ public interface UserChallengeRepository extends JpaRepository<UserChallenge, UU
     @EntityGraph(attributePaths = "challenge")
     List<UserChallenge> findByUser(User user);
 
-    @EntityGraph(attributePaths = "challenge")
-    Optional<UserChallenge> findByUserAndChallengeId(User user, UUID challengeId);
+    @EntityGraph(attributePaths = {"name", "challenge"})
+    Optional<UserChallenge> findByUserAndChallenge(User user, Challenge challenge);
 }
