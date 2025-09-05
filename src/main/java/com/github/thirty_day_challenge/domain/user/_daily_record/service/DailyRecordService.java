@@ -16,7 +16,7 @@ public class DailyRecordService {
     private final DailyRecordRepository dailyRecordRepository;
 
     public List<DailyRecordResponse> getDailyRecords(UserChallenge userChallenge) {
-        return dailyRecordRepository.findByUserChallenge(userChallenge)
+        return dailyRecordRepository.findByUserChallengeOrderByRecordDateAsc(userChallenge)
                 .stream()
                 .map(DailyRecordResponse::from)
                 .collect(Collectors.toList());

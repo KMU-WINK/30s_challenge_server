@@ -9,4 +9,7 @@ import java.util.UUID;
 
 public interface DailyRecordRepository extends JpaRepository<DailyRecord, UUID> {
     List<DailyRecord> findByUserChallenge(UserChallenge userChallenge);
+
+    List<DailyRecord> findByUserChallengeOrderByRecordDateAsc(UserChallenge userChallenge);
+
 }
