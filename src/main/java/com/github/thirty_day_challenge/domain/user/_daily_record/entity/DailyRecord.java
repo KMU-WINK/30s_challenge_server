@@ -5,6 +5,7 @@ import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_challenge_id", "createdAt"}))
 @Entity
 @Getter
 @Setter
