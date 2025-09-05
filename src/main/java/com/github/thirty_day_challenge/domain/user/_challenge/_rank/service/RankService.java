@@ -9,6 +9,7 @@ import com.github.thirty_day_challenge.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -21,7 +22,10 @@ public class RankService {
 
         List<DailyRecord> dailyRecords = userChallengeRepository.findByUserAndChallenge(user, challenge)
                 .orElseThrow(ChallengeExceptions.USER_DONT_PARTICIPATE::toException)
-                .getDailyRecords();
+                .getDailyRecords()
+                .stream()
+                .sorted(Comparator.comparing(DailyRecord::getCreatedAt))
+                .toList();
 
         int streak = 0;
 

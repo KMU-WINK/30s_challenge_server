@@ -3,7 +3,6 @@ package com.github.thirty_day_challenge.domain.user._daily_record.entity;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -23,7 +22,6 @@ public class DailyRecord extends BaseSchema {
     boolean isCompleted = false;
 
     @Column
-    @NotNull
     String image;
 }
 

@@ -34,7 +34,7 @@ public class UserChallenge extends BaseSchema {
     @JoinColumn(name = "challenge_id", nullable = false)
     Challenge challenge;
 
-    @OneToMany(mappedBy = "user_challenge", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "userChallenge", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     List<DailyRecord> dailyRecords = new ArrayList<>();
 }
