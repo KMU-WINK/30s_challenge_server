@@ -63,6 +63,21 @@ public class ChallengeService {
                 .toList());
     }
 
+    @Transactional
+    public void participateChallenge(User user, String code) {
+
+        Challenge challenge = challengeRepository.findByCode(code)
+                .orElseThrow(ChallengeExceptions.NOT_FOUND::toException);
+
+        UserChallenge userChallenge = UserChallenge.builder()
+                .user(user)
+                .challenge(challenge)
+                .isOwner(false)
+                .build();
+
+        userChallengeRepository.save(userChallenge);
+    }
+
     @Transactional(readOnly = true)
     public ChallengeResponse searchChallenge(String code) {
 
