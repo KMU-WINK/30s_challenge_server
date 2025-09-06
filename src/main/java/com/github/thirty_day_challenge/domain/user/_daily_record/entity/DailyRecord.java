@@ -1,30 +1,27 @@
 package com.github.thirty_day_challenge.domain.user._daily_record.entity;
 
-import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
+import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
 
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_challenge_id", "createdAt"}))
 @Entity
 @Getter
 @Setter
 @Builder(toBuilder = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class DailyRecord extends BaseSchema {
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_challenge_id", nullable = false)
-    private UserChallenge userChallenge;
+    UserChallenge userChallenge;
 
     @Column(nullable = false)
-    private boolean isCompleted = false;
+    boolean isCompleted = false;
 
-    @Column(name = "record_date", nullable = false)
-    private LocalDate recordDate;
-
-    @Column(nullable = true, length = 2048)
-    private String image;
-
+    @Column
+    String image;
 }

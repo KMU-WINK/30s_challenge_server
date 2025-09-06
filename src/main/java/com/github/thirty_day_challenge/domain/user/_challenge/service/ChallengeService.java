@@ -62,4 +62,11 @@ public class ChallengeService {
                 .map(UserChallenge::getChallenge)
                 .toList());
     }
+
+    @Transactional(readOnly = true)
+    public ChallengeResponse searchChallenge(String code) {
+
+        return ChallengeResponse.from(challengeRepository.findByCode(code)
+                .orElseThrow(ChallengeExceptions.NOT_FOUND::toException));
+    }
 }
