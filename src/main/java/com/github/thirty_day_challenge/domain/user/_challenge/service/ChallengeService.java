@@ -76,5 +76,11 @@ public class ChallengeService {
                 .build();
 
         userChallengeRepository.save(userChallenge);
+
+    @Transactional(readOnly = true)
+    public ChallengeResponse searchChallenge(String code) {
+
+        return ChallengeResponse.from(challengeRepository.findByCode(code)
+                .orElseThrow(ChallengeExceptions.NOT_FOUND::toException));
     }
 }

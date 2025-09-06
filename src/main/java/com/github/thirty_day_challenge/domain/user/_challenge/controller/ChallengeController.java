@@ -43,5 +43,11 @@ public class ChallengeController {
         challengeService.participateChallenge(user, code);
 
         return ResponseEntity.ok().build();
+
+    @GetMapping("/{code}")
+    public ResponseEntity<ChallengeResponse> searchChallenge(@PathVariable String code) {
+
+        return ResponseEntity.ok(challengeService.searchChallenge(code));
+
     }
 }
