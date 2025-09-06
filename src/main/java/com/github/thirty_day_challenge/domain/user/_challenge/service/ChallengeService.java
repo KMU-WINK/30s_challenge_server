@@ -67,7 +67,7 @@ public class ChallengeService {
     public void participateChallenge(User user, String code) {
 
         Challenge challenge = challengeRepository.findByCode(code)
-                .orElseThrow(() -> ChallengeExceptions.CHALLENGE_NOT_FOUND.toException());
+                .orElseThrow(ChallengeExceptions.NOT_FOUND::toException);
 
         UserChallenge userChallenge = UserChallenge.builder()
                 .user(user)
@@ -76,6 +76,7 @@ public class ChallengeService {
                 .build();
 
         userChallengeRepository.save(userChallenge);
+    }
 
     @Transactional(readOnly = true)
     public ChallengeResponse searchChallenge(String code) {
