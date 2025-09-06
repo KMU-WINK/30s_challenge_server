@@ -25,4 +25,3 @@ public class DailyRecord extends BaseSchema {
     @Column
     String image;
 }
-
