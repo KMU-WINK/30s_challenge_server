@@ -1,7 +1,6 @@
 package com.github.thirty_day_challenge.domain.user._daily_record.controller;
 
 import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
-import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.DailyRecordResponse;
 import com.github.thirty_day_challenge.domain.user._daily_record.service.DailyRecordService;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
@@ -9,9 +8,12 @@ import com.github.thirty_day_challenge.domain.user._user_challenge.repository.Us
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,6 +25,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/users/challenges/{challengeId}/records")
 @RequiredArgsConstructor
+@Validated
 public class DailyRecordController {
 
     private final DailyRecordService dailyRecordService;
@@ -33,8 +36,12 @@ public class DailyRecordController {
             @CurrentUser User user,
             @PathVariable UUID challengeId,
             @RequestParam(required = false) Integer year,
-            @RequestParam(required = false) Integer month
+            @RequestParam(required = false) @Min(1) @Max(12) Integer month
     ) {
+        if ((year == null) != (month == null)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "year와 month는 함께 제공해야 합니다.");
+        }
         UserChallenge userChallenge = userChallengeRepository
                 .findByUserIdAndChallengeId(user.getId(), challengeId)
                 .orElseThrow(() -> new ResponseStatusException(
