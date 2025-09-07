@@ -5,6 +5,8 @@ import com.github.thirty_day_challenge.global.infra.mysql.BaseSchema;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_challenge_id", "createdAt"}))
 @Entity
 @Getter
@@ -21,6 +23,9 @@ public class DailyRecord extends BaseSchema {
 
     @Column(nullable = false)
     boolean isCompleted = false;
+
+    @Column(nullable = false)
+    private LocalDate recordDate;
 
     @Column
     String image;

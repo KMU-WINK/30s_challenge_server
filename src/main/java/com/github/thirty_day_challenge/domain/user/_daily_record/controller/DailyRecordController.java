@@ -1,6 +1,7 @@
 package com.github.thirty_day_challenge.domain.user._daily_record.controller;
 
 import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
+import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.DailyRecordResponse;
 import com.github.thirty_day_challenge.domain.user._daily_record.service.DailyRecordService;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
@@ -30,7 +31,9 @@ public class DailyRecordController {
     @GetMapping
     public ResponseEntity<List<DailyRecordResponse>> getDailyRecords(
             @CurrentUser User user,
-            @PathVariable UUID challengeId
+            @PathVariable UUID challengeId,
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) Integer month
     ) {
         UserChallenge userChallenge = userChallengeRepository
                 .findByUserIdAndChallengeId(user.getId(), challengeId)
@@ -38,6 +41,6 @@ public class DailyRecordController {
                         HttpStatus.FORBIDDEN, ("해당 챌린지에 참여하고 있지 않습니다."))
                 );
 
-        return ResponseEntity.ok(dailyRecordService.getDailyRecords(userChallenge));
+        return ResponseEntity.ok(dailyRecordService.getDailyRecords(userChallenge, year, month));
     }
 }
