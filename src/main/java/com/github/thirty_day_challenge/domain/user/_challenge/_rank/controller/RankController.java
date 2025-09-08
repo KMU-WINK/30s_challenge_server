@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Tag(name = "랭크")
 @Auth
 @RestController
@@ -32,5 +34,12 @@ public class RankController {
     ) {
 
         return ResponseEntity.ok(rankService.getMyStreak(user, challenge));
+    }
+
+    @GetMapping("/rank/me")
+    public ResponseEntity<List<DailyRecordResponse>> getMyRank(
+            @CurrentUser User user
+    ) {
+        return ResponseEntity.ok(rankService.getMyRank(user));
     }
 }
