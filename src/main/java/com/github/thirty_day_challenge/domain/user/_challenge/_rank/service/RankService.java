@@ -38,4 +38,12 @@ public class RankService {
 
         return DailyRecordResponse.from(challenge, streak);
     }
+
+    public List<DailyRecordResponse> getMyRank(User user) {
+
+        return userChallengeRepository.findByUser(user).stream()
+                .map(userChallenge -> getMyStreak(user, userChallenge.getChallenge()))
+                .sorted(Comparator.comparingInt(DailyRecordResponse::getStreak).reversed())
+                .toList();
+    }
 }
