@@ -69,6 +69,13 @@ public class ChallengeService {
         Challenge challenge = challengeRepository.findByCode(code)
                 .orElseThrow(ChallengeExceptions.NOT_FOUND::toException);
 
+        Integer joined = userChallengeRepository.countByChallengeId(challenge.getId());
+        Integer limits = challenge.getLimits();
+
+        if (limits != null && joined >= limits) {
+            throw ChallengeExceptions.LIMITS_REACHED.toException();
+        }
+
         UserChallenge userChallenge = UserChallenge.builder()
                 .user(user)
                 .challenge(challenge)
