@@ -40,6 +40,7 @@ public class RankService {
     }
 
     public List<DailyRecordResponse> getMyRank(User user) {
+
         return userChallengeRepository.findByUser(user).stream()
                 .map(userChallenge -> getMyStreak(user, userChallenge.getChallenge()))
                 .sorted(Comparator.comparingInt(DailyRecordResponse::getStreak).reversed())
