@@ -11,7 +11,8 @@ public enum ChallengeExceptions implements ApiExceptionCode {
     INVALID_DATE("CH_001", "날짜 정보가 올바르지 않습니다."),
     NOT_FOUND("CH_002", "챌린지를 찾을 수 없습니다."),
     USER_DONT_PARTICIPATE("CH_003", "유저가 챌린지에 참여하고 있지 않습니다."),
-    LIMITS_REACHED("CH_004", "챌린지 참여 제한 인원수가 이미 채워졌습니다.")
+    LIMITS_REACHED("CH_004", "챌린지 참여 제한 인원수가 이미 채워졌습니다."),
+    ALREADY_PARTICIPATED("CH_005", "챌린지에 이미 참여하고 있습니다.")
     ;
 
     private final String code;

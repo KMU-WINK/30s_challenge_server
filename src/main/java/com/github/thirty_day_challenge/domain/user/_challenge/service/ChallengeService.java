@@ -76,6 +76,10 @@ public class ChallengeService {
             throw ChallengeExceptions.LIMITS_REACHED.toException();
         }
 
+        if (userChallengeRepository.existsByUserAndChallenge(user, challenge)) {
+            throw ChallengeExceptions.ALREADY_PARTICIPATED.toException();
+        }
+
         UserChallenge userChallenge = UserChallenge.builder()
                 .user(user)
                 .challenge(challenge)
