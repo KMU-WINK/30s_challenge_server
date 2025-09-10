@@ -15,7 +15,7 @@ public class ParticipantsResponse {
 
     boolean isCompleted;
 
-    Integer streak;
+    int streak;
 
     public static ParticipantsResponse of(UserChallenge userChallenge, int streak) {
         return ParticipantsResponse.of(
