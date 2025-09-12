@@ -1,4 +1,4 @@
-package com.github.thirty_day_challenge.domain.user._daily_record.dto;
+package com.github.thirty_day_challenge.domain.user._daily_record.dto.response;
 
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;

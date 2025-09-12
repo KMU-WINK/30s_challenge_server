@@ -3,7 +3,7 @@ package com.github.thirty_day_challenge.domain.user._challenge._rank.controller;
 import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
 import com.github.thirty_day_challenge.domain.user._challenge._rank.service.RankService;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
-import com.github.thirty_day_challenge.domain.user._daily_record.dto.StreakResponse;
+import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.StreakResponse;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
 import io.swagger.v3.oas.annotations.Operation;
