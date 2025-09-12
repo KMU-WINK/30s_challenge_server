@@ -2,7 +2,7 @@ package com.github.thirty_day_challenge.domain.user._challenge._rank.service;
 
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
-import com.github.thirty_day_challenge.domain.user._daily_record.dto.StreakResponse;
+import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.StreakResponse;
 import com.github.thirty_day_challenge.domain.user._daily_record.entity.DailyRecord;
 import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
 import com.github.thirty_day_challenge.domain.user.entity.User;
