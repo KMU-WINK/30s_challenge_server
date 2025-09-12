@@ -2,7 +2,9 @@ package com.github.thirty_day_challenge.domain.user._daily_record.service;
 
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
+import com.github.thirty_day_challenge.domain.user._daily_record.dto.DailyRecordResponse;
 import com.github.thirty_day_challenge.domain.user._daily_record.dto.ListDailyRecordResponse;
+import com.github.thirty_day_challenge.domain.user._daily_record.entity.DailyRecord;
 import com.github.thirty_day_challenge.domain.user._daily_record.repository.DailyRecordRepository;
 import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
@@ -23,5 +25,10 @@ public class DailyRecordService {
                 .orElseThrow(ChallengeExceptions.USER_DONT_PARTICIPATE::toException);
 
         return ListDailyRecordResponse.from(dailyRecordRepository.findByUserChallengeAndYearAndMonth(userChallenge, year, month));
+    }
+
+    public DailyRecordResponse getDailyRecord(Challenge challenge, DailyRecord dailyRecord) {
+
+        return DailyRecordResponse.from(dailyRecord);
     }
 }
