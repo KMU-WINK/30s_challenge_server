@@ -2,7 +2,9 @@ package com.github.thirty_day_challenge.domain.user._daily_record.controller;
 
 import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
+import com.github.thirty_day_challenge.domain.user._daily_record.dto.DailyRecordResponse;
 import com.github.thirty_day_challenge.domain.user._daily_record.dto.ListDailyRecordResponse;
+import com.github.thirty_day_challenge.domain.user._daily_record.entity.DailyRecord;
 import com.github.thirty_day_challenge.domain.user._daily_record.service.DailyRecordService;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
@@ -38,4 +40,15 @@ public class DailyRecordController {
 
         return ResponseEntity.ok(dailyRecordService.getDailyRecords(user, challenge, year, month));
     }
+
+    @GetMapping("/{record}")
+    @Operation(description = "기록 상세 조회")
+    public ResponseEntity<DailyRecordResponse> getDailyRecord(
+            @Parameter(description = "챌린지 ID", schema = @Schema(type = "string", format = "uuid")) @PathVariable Challenge challenge,
+            @Parameter(description = "기록 ID", schema = @Schema(type = "string", format = "uuid")) @PathVariable DailyRecord record
+    ) {
+
+        return ResponseEntity.ok(dailyRecordService.getDailyRecord(challenge, record));
+    }
+
 }
