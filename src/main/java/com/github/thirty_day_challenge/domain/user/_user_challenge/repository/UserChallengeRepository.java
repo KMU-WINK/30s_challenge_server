@@ -17,4 +17,8 @@ public interface UserChallengeRepository extends JpaRepository<UserChallenge, UU
 
     @EntityGraph(attributePaths = {"user", "challenge"})
     Optional<UserChallenge> findByUserAndChallenge(User user, Challenge challenge);
+
+    Integer countByChallengeId(UUID challengeId);
+
+    boolean existsByUserAndChallenge(User user, Challenge challenge);
 }
