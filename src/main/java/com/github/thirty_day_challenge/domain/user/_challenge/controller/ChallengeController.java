@@ -17,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @Tag(name = "챌린지")
 @Auth
 @RestController
@@ -43,7 +41,7 @@ public class ChallengeController {
         return ResponseEntity.ok(challengeService.getAllChallenges(user));
     }
 
-    @GetMapping("/{code}")
+    @GetMapping("/search/{code}")
     public ResponseEntity<ChallengeResponse> searchChallenge(@PathVariable String code) {
 
         return ResponseEntity.ok(challengeService.searchChallenge(code));
