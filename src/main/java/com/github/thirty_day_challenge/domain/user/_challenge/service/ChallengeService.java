@@ -1,8 +1,7 @@
 package com.github.thirty_day_challenge.domain.user._challenge.service;
 
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
-import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeListResponse;
-import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeResponse;
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.*;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._challenge.repository.ChallengeRepository;
@@ -13,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -68,5 +68,34 @@ public class ChallengeService {
 
         return ChallengeResponse.from(challengeRepository.findByCode(code)
                 .orElseThrow(ChallengeExceptions.NOT_FOUND::toException));
+    }
+
+    @Transactional(readOnly = true)
+    public ChallengeDetailResponse getChallengeDetail(User user, Challenge challenge) {
+
+        ChallengeResponse challengeResponse = ChallengeResponse.from(challenge);
+
+        List<SimpleUserResponse> simpleUserResponses =
+                userChallengeRepository.findByChallenge(challenge).stream()
+                        .map(UserChallenge::getUser)
+                        .map(SimpleUserResponse::from)
+                        .toList();
+
+        boolean isParticipant = false;
+
+        for(SimpleUserResponse simpleUserResponse : simpleUserResponses) {
+            if (simpleUserResponse.getNickname().equals(user.getNickname())) {
+                isParticipant = true;
+                break;
+            }
+        }
+
+        if (!isParticipant) {
+            throw ChallengeExceptions.USER_DONT_PARTICIPATE.toException();
+        }
+
+        ParticipantsResponse participantsResponse = ParticipantsResponse.of(simpleUserResponses);
+
+        return ChallengeDetailResponse.of(challengeResponse, participantsResponse);
     }
 }
