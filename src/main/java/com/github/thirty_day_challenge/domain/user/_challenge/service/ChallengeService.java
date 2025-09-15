@@ -73,6 +73,10 @@ public class ChallengeService {
     @Transactional(readOnly = true)
     public ChallengeDetailResponse getChallengeDetail(User user, Challenge challenge) {
 
+        if (challenge == null) {
+            throw ChallengeExceptions.NOT_FOUND.toException();
+        }
+
         ChallengeResponse challengeResponse = ChallengeResponse.from(challenge);
 
         List<SimpleUserResponse> simpleUserResponses =
