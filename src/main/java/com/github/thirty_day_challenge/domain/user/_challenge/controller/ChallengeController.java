@@ -11,6 +11,7 @@ import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class ChallengeController {
     private final ChallengeService challengeService;
 
     @PostMapping
+    @Operation(description = "챌린지 생성")
     public ResponseEntity<ChallengeResponse> createChallenge(
             @CurrentUser User user,
             @RequestBody @Valid CreateChallengeRequest request
@@ -36,15 +38,27 @@ public class ChallengeController {
     }
 
     @GetMapping
+    @Operation(description = "참여 중인 챌린지 목록 조회")
     public ResponseEntity<ChallengeListResponse> getAllChallenges(@CurrentUser User user) {
 
         return ResponseEntity.ok(challengeService.getAllChallenges(user));
     }
 
+    @PostMapping("/{code}")
+    @Operation(description = "챌린지 참여")
+    public ResponseEntity<Void> participateChallenge(@CurrentUser User user, @PathVariable String code) {
+
+        challengeService.participateChallenge(user, code);
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/search/{code}")
+    @Operation(description = "챌린지 검색")
     public ResponseEntity<ChallengeResponse> searchChallenge(@PathVariable String code) {
 
         return ResponseEntity.ok(challengeService.searchChallenge(code));
+
     }
 
     @GetMapping("/{challenge}")

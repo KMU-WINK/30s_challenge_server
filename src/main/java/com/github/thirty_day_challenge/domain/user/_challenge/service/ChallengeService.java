@@ -63,6 +63,32 @@ public class ChallengeService {
                 .toList());
     }
 
+    @Transactional
+    public void participateChallenge(User user, String code) {
+
+        Challenge challenge = challengeRepository.findByCode(code)
+                .orElseThrow(ChallengeExceptions.NOT_FOUND::toException);
+
+        Integer joined = userChallengeRepository.countByChallengeId(challenge.getId());
+        Integer limits = challenge.getLimits();
+
+        if (limits != null && joined >= limits) {
+            throw ChallengeExceptions.LIMITS_REACHED.toException();
+        }
+
+        if (userChallengeRepository.existsByUserAndChallenge(user, challenge)) {
+            throw ChallengeExceptions.ALREADY_PARTICIPATED.toException();
+        }
+
+        UserChallenge userChallenge = UserChallenge.builder()
+                .user(user)
+                .challenge(challenge)
+                .isOwner(false)
+                .build();
+
+        userChallengeRepository.save(userChallenge);
+    }
+
     @Transactional(readOnly = true)
     public ChallengeResponse searchChallenge(String code) {
 

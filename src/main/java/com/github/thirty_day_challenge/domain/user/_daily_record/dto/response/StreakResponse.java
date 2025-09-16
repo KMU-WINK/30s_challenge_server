@@ -1,4 +1,4 @@
-package com.github.thirty_day_challenge.domain.user._daily_record.dto;
+package com.github.thirty_day_challenge.domain.user._daily_record.dto.response;
 
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
@@ -7,17 +7,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@Schema(description = "일일 기록 응답 DTO")
+@Schema(description = "스트릭 응답 DTO")
 @AllArgsConstructor(staticName = "of")
-public class DailyRecordResponse {
+public class StreakResponse {
 
     private SimpleChallengeResponse challenge;
 
     private Integer streak;
 
-    public static DailyRecordResponse from(Challenge challenge, Integer streak) {
+    public static StreakResponse from(Challenge challenge, Integer streak) {
 
-        return DailyRecordResponse.of(
+        return StreakResponse.of(
                 SimpleChallengeResponse.from(challenge),
                 streak
         );
