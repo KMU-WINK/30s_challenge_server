@@ -17,7 +17,8 @@ public class UserChallengeRankResponse {
 
     private List<ParticipantsResponse> participants;
 
-    public static UserChallengeRankResponse of(Challenge challenge, List<ParticipantsResponse> participants) {
+    public static UserChallengeRankResponse from(Challenge challenge, List<ParticipantsResponse> participants) {
+
         return UserChallengeRankResponse.of(
                 SimpleChallengeResponse.from(challenge),
                 participants

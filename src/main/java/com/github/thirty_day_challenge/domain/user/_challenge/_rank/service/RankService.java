@@ -1,6 +1,5 @@
 package com.github.thirty_day_challenge.domain.user._challenge._rank.service;
 
-import com.github.thirty_day_challenge.domain.user._challenge.dto.response.SimpleChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.StreakResponse;
@@ -41,7 +40,7 @@ public class RankService {
             streak++;
         }
 
-        return StreakResponse.from(challenge, streak);
+        return StreakResponse.from(user, challenge, streak);
     }
 
     public List<StreakResponse> getMyRank(User user) {
@@ -55,20 +54,21 @@ public class RankService {
     public UserChallengeRankResponse getRank(Challenge challenge) {
 
         List<UserChallenge> userChallenges = userChallengeRepository.findByChallenge(challenge);
+
         List<ParticipantsResponse> participants = new ArrayList<>();
 
         for (UserChallenge uc : userChallenges) {
+
             int streak = getMyStreak(uc.getUser(), challenge).getStreak();
 
-            ParticipantsResponse participant = ParticipantsResponse.of(uc, streak);
+            ParticipantsResponse participant = ParticipantsResponse.from(uc.getUser(), streak);
             participants.add(participant);
         }
 
-        participants.sort((p1, p2) -> p2.getStreak().compareTo(p1.getStreak()));
-
-        return UserChallengeRankResponse.of(
-                SimpleChallengeResponse.from(challenge),
-                participants
+        participants.sort(
+                (p1, p2) -> Integer.compare(p2.getStreak(), p1.getStreak())
         );
+
+        return UserChallengeRankResponse.from(challenge, participants);
     }
 }

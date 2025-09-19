@@ -1,7 +1,7 @@
 package com.github.thirty_day_challenge.domain.user._user_challenge.dto;
 
-import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
-import com.github.thirty_day_challenge.domain.user.dto.response.UserResponse;
+import com.github.thirty_day_challenge.domain.user.dto.response.SimpleUserResponse;
+import com.github.thirty_day_challenge.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,19 +9,14 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class ParticipantsResponse {
 
-    UserResponse user;
-
-    boolean isOwner;
-
-    boolean isCompleted;
+    SimpleUserResponse user;
 
     int streak;
 
-    public static ParticipantsResponse of(UserChallenge userChallenge, int streak) {
+    public static ParticipantsResponse from(User user, int streak) {
+
         return ParticipantsResponse.of(
-                UserResponse.from(userChallenge.getUser()),
-                userChallenge.isOwner(),
-                userChallenge.isCompleted(),
+                SimpleUserResponse.from(user),
                 streak
         );
     }
