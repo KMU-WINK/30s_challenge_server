@@ -1,6 +1,7 @@
 package com.github.thirty_day_challenge.domain.user._challenge.service;
 
 import com.github.thirty_day_challenge.domain.user._challenge.dto.request.CreateChallengeRequest;
+import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeDetailResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeListResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.dto.response.ChallengeResponse;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -94,5 +96,20 @@ public class ChallengeService {
 
         return ChallengeResponse.from(challengeRepository.findByCode(code)
                 .orElseThrow(ChallengeExceptions.NOT_FOUND::toException));
+    }
+
+    @Transactional(readOnly = true)
+    public ChallengeDetailResponse getChallengeDetail(User user, Challenge challenge) {
+
+        List<User> users = userChallengeRepository.findByChallenge(challenge).stream()
+                .map(UserChallenge::getUser)
+                .toList();
+
+        if (users.stream().noneMatch(u -> u.equals(user))) {
+
+            throw ChallengeExceptions.USER_DONT_PARTICIPATE.toException();
+        }
+
+        return ChallengeDetailResponse.from(challenge, users);
     }
 }
