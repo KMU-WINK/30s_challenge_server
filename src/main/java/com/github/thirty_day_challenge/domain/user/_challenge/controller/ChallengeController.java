@@ -62,6 +62,7 @@ public class ChallengeController {
     }
 
     @GetMapping("/{challenge}")
+    @Operation(description = "챌린지 상세 조회")
     public ResponseEntity<ChallengeDetailResponse> getChallengeDetail(
             @CurrentUser User user,
             @Parameter(description = "챌린지 ID", schema = @Schema(type = "string", format = "uuid")) @PathVariable Challenge challenge) {

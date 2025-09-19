@@ -1,12 +1,14 @@
-package com.github.thirty_day_challenge.domain.user._challenge.dto.response;
+package com.github.thirty_day_challenge.domain.user.dto.response;
 
 import com.github.thirty_day_challenge.domain.user.entity.User;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
+@Schema(name = "간단한 유저 응답 DTO")
 @AllArgsConstructor(staticName = "of")
 public class SimpleUserResponse {
 
@@ -16,10 +18,9 @@ public class SimpleUserResponse {
 
     public static SimpleUserResponse from(User user) {
 
-        return new SimpleUserResponse(
+        return SimpleUserResponse.of(
                 user.getId(),
                 user.getNickname()
         );
     }
-
 }
