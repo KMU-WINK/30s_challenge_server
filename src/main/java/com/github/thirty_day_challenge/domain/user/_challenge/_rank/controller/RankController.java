@@ -3,8 +3,7 @@ package com.github.thirty_day_challenge.domain.user._challenge._rank.controller;
 import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
 import com.github.thirty_day_challenge.domain.user._challenge._rank.service.RankService;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
-import com.github.thirty_day_challenge.domain.user._daily_record.dto.DailyRecordResponse;
-import com.github.thirty_day_challenge.domain.user._user_challenge.dto.UserChallengeRankResponse;
+import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.StreakResponse;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +30,7 @@ public class RankController {
 
     @GetMapping("/{challenge}/rank/me")
     @Operation(description = "각 챌린지 내 본인 스트릭 조회")
-    public ResponseEntity<DailyRecordResponse> getMyStreak(
+    public ResponseEntity<StreakResponse> getMyStreak(
             @CurrentUser User user,
             @Parameter(description = "챌린지 ID", schema = @Schema(type = "string", format = "uuid")) @PathVariable Challenge challenge
     ) {
@@ -41,7 +40,7 @@ public class RankController {
 
     @GetMapping("/rank/me")
     @Operation(description = "본인의 각 챌린지 스트릭 랭킹 조회")
-    public ResponseEntity<List<DailyRecordResponse>> getMyRank(
+    public ResponseEntity<List<StreakResponse>> getMyRank(
             @CurrentUser User user
     ) {
 
