@@ -4,11 +4,15 @@ import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._challenge.exception.ChallengeExceptions;
 import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.StreakResponse;
 import com.github.thirty_day_challenge.domain.user._daily_record.entity.DailyRecord;
+import com.github.thirty_day_challenge.domain.user._user_challenge.dto.ParticipantsResponse;
+import com.github.thirty_day_challenge.domain.user._user_challenge.dto.UserChallengeRankResponse;
+import com.github.thirty_day_challenge.domain.user._user_challenge.entity.UserChallenge;
 import com.github.thirty_day_challenge.domain.user._user_challenge.repository.UserChallengeRepository;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -36,7 +40,7 @@ public class RankService {
             streak++;
         }
 
-        return StreakResponse.from(challenge, streak);
+        return StreakResponse.from(user, challenge, streak);
     }
 
     public List<StreakResponse> getMyRank(User user) {
@@ -45,5 +49,26 @@ public class RankService {
                 .map(userChallenge -> getMyStreak(user, userChallenge.getChallenge()))
                 .sorted(Comparator.comparingInt(StreakResponse::getStreak).reversed())
                 .toList();
+    }
+
+    public UserChallengeRankResponse getRank(Challenge challenge) {
+
+        List<UserChallenge> userChallenges = userChallengeRepository.findByChallenge(challenge);
+
+        List<ParticipantsResponse> participants = new ArrayList<>();
+
+        for (UserChallenge uc : userChallenges) {
+
+            int streak = getMyStreak(uc.getUser(), challenge).getStreak();
+
+            ParticipantsResponse participant = ParticipantsResponse.from(uc.getUser(), streak);
+            participants.add(participant);
+        }
+
+        participants.sort(
+                (p1, p2) -> Integer.compare(p2.getStreak(), p1.getStreak())
+        );
+
+        return UserChallengeRankResponse.from(challenge, participants);
     }
 }

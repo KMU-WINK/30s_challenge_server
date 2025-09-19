@@ -4,6 +4,7 @@ import com.github.thirty_day_challenge.domain.auth.annotation.Auth;
 import com.github.thirty_day_challenge.domain.user._challenge._rank.service.RankService;
 import com.github.thirty_day_challenge.domain.user._challenge.entity.Challenge;
 import com.github.thirty_day_challenge.domain.user._daily_record.dto.response.StreakResponse;
+import com.github.thirty_day_challenge.domain.user._user_challenge.dto.UserChallengeRankResponse;
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import com.github.thirty_day_challenge.global.util.CurrentUser;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,4 +47,14 @@ public class RankController {
 
         return ResponseEntity.ok(rankService.getMyRank(user));
     }
+
+    @GetMapping("/{challenge}/rank")
+    @Operation(description = "챌린지 내 참여자 순위 조회")
+    public ResponseEntity<UserChallengeRankResponse> getRank(
+            @Parameter(description = "챌린지 ID", schema = @Schema(type = "string", format = "uuid")) @PathVariable Challenge challenge
+    ) {
+
+        return ResponseEntity.ok(rankService.getRank(challenge));
+    }
+
 }
