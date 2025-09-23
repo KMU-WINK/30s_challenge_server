@@ -11,6 +11,10 @@ import com.github.thirty_day_challenge.domain.user._user_challenge.repository.Us
 import com.github.thirty_day_challenge.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -29,18 +33,28 @@ public class DailyRecordService {
 
     public DailyRecordResponse getDailyRecord(Challenge challenge, DailyRecord dailyRecord) {
 
-        return DailyRecordResponse.from(dailyRecord);
+        byte[] imageData = dailyRecord.getImageData();
+        String base64Image = Base64.getEncoder().encodeToString(imageData);
+
+        return DailyRecordResponse.from(dailyRecord, base64Image);
     }
 
-    public void submitDailyRecord(User user, Challenge challenge, String image) {
+    public void submitDailyRecord(User user, Challenge challenge, MultipartFile file) {
 
         UserChallenge userChallenge = userChallengeRepository.findByUserAndChallenge(user, challenge)
                 .orElseThrow(ChallengeExceptions.USER_DONT_PARTICIPATE::toException);
 
-        dailyRecordRepository.save(DailyRecord.builder()
-                        .image(image)
-                        .isCompleted(true)
-                        .userChallenge(userChallenge)
-                        .build());
+        try {
+            DailyRecord record = DailyRecord.builder()
+                    .imageData(file.getBytes())
+                    .imageContentType(file.getContentType())
+                    .isCompleted(true)
+                    .userChallenge(userChallenge)
+                    .build();
+
+            dailyRecordRepository.save(record);
+        } catch (IOException e) {
+            throw new RuntimeException("이미지 처리 실패", e);
+        }
     }
 }
