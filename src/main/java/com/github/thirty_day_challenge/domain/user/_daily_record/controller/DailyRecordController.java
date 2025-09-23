@@ -16,9 +16,11 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "기록")
 @Auth
@@ -52,15 +54,15 @@ public class DailyRecordController {
         return ResponseEntity.ok(dailyRecordService.getDailyRecord(challenge, record));
     }
 
-    @PostMapping("/submit")
+    @PostMapping(value = "/submit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(description = "기록 생성")
     public ResponseEntity<Void> submitDailyRecord(
             @CurrentUser User user,
             @Parameter(description = "챌린지 ID", schema = @Schema(type = "string", format = "uuid")) @PathVariable Challenge challenge,
-            @RequestBody @NotBlank String image
+            @Parameter(description = "업로드할 이미지 파일", required = true, schema = @Schema(type = "string", format = "binary")) @RequestParam("file") MultipartFile file
     ) {
 
-        dailyRecordService.submitDailyRecord(user, challenge, image);
+        dailyRecordService.submitDailyRecord(user, challenge, file);
 
         return ResponseEntity.ok().build();
     }
