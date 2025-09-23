@@ -22,7 +22,11 @@ public class DailyRecord extends BaseSchema {
     @Column(nullable = false)
     boolean isCompleted = false;
 
-    @Column
-    String image;
+    @Lob
+    @Column(name = "image_data", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] imageData;
+
+    @Column(nullable = false)
+    private String imageContentType;
 }
 

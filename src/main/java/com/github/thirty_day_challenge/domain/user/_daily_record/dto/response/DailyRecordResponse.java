@@ -19,15 +19,18 @@ public class DailyRecordResponse {
 
     boolean isCompleted;
 
-    String image;
+    private String base64Image;
 
-    public static DailyRecordResponse from(DailyRecord record) {
+    private String imageContentType;
+
+    public static DailyRecordResponse from(DailyRecord record, String base64Image) {
 
         return DailyRecordResponse.of(
                 record.getId(),
                 record.getCreatedAt(),
                 record.isCompleted(),
-                record.getImage()
+                base64Image,
+                record.getImageContentType()
         );
     }
 }
